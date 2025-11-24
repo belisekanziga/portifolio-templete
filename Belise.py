@@ -1,0 +1,281 @@
+import streamlit as st
+import base64
+from datetime import datetime
+
+# Page configuration
+st.set_page_config(
+    page_title="Kanziga Belise — Data Scientist",
+    page_icon="📊",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
+
+# CSS styling - copied directly from your HTML
+st.markdown("""
+<style>
+    :root{
+        --text:#ffffff; --muted:#cbd5e1; --bg:#0b1020; --card:#12172a;
+        --accent:#facc15; --border:rgba(255,255,255,.08);
+    }
+    *{box-sizing:border-box; margin:0; padding:0}
+    .main {font-family:'Inter',sans-serif; color:var(--text); background:var(--bg); line-height:1.6}
+    a{color:var(--text); text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    /* Header + nav */
+    header{position:fixed; top:0; left:0; right:0; z-index:50;
+        background:rgba(10,12,20,.65); backdrop-filter:blur(10px); border-bottom:1px solid var(--border)}
+    .nav{max-width:1100px; margin:0 auto; padding:14px 20px; display:flex; align-items:center; justify-content:space-between}
+    .nav ul{list-style:none; display:flex; gap:22px}
+    .brand{font-weight:700; letter-spacing:.3px}
+
+    /* Hero */
+    .hero{
+        min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+        background:linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.55)), url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=2065&q=80') center/cover no-repeat fixed; position:relative
+    }
+    .hero-content{position:relative; z-index:1; padding:0 20px}
+    .hero h1{font-size:2.8rem; font-weight:700; margin-bottom:10px}
+    .hero h2{font-size:2rem; font-weight:600; margin-bottom:24px}
+    .btn{background:var(--accent); color:#1f2937; padding:12px 20px; border:none; border-radius:10px; font-weight:600; cursor:pointer; transition:filter 0.2s ease; display:inline-block}
+    .btn:hover{filter:brightness(1.05)}
+    .contact-mini{margin-top:28px; display:grid; gap:10px; justify-items:center}
+    .contact-mini a{opacity:.9}
+
+    /* Sections */
+    main{max-width:1100px; margin:0 auto; padding:40px 20px}
+    section{margin-top:40px}
+    .card{background:var(--card); border:1px solid var(--border); border-radius:16px}
+    .card .inner{padding:20px}
+    .grid{display:grid; gap:18px}
+    .split{grid-template-columns:1fr 1fr}
+    h3{font-size:1.5rem; margin-bottom:6px}
+    p.muted{color:var(--muted)}
+    ul{padding-left:18px; margin-top:8px}
+    li{margin:6px 0}
+
+    /* Simple skill pills */
+    .pill{display:inline-block; padding:6px 10px; border-radius:999px; border:1px solid var(--border); margin:4px; color:var(--muted)}
+
+    /* Footer */
+    footer{margin:40px 0 20px; color:var(--muted); text-align:center}
+
+    @media (max-width:900px){ .split{grid-template-columns:1fr} }
+    
+    /* Streamlit specific overrides */
+    .stApp {background-color: var(--bg)}
+    .main .block-container {padding-top: 0; padding-bottom: 0}
+    div[data-testid="stVerticalBlock"] > div {background-color: transparent}
+    
+    /* Hide Streamlit default elements */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+""", unsafe_allow_html=True)
+
+# Navigation
+st.markdown("""
+<header>
+    <nav class="nav" aria-label="Primary">
+        <div class="brand">Kanziga Belise</div>
+        <ul>
+            <li><a href="#home">HOME</a></li>
+            <li><a href="#about">ABOUT</a></li>
+            <li><a href="#projects">PROJECTS</a></li>
+            <li><a href="#contact">CONTACT</a></li>
+        </ul>
+    </nav>
+</header>
+""", unsafe_allow_html=True)
+
+# Home Section
+st.markdown("""
+<section id="home" class="hero" aria-label="Homepage">
+    <div class="hero-content">
+        <h1>Welcome</h1>
+        <h2>I am Belise Kanziga<br/>a Data Scientist</h2>
+        <a class="btn" href="#contact">Contact me</a>
+        <div class="contact-mini">
+            <a href="mailto:belisekanziga@gmail.com">📧 belisekanziga@gmail.com</a>
+            <a href="https://github.com/belisekanziga" target="_blank" rel="noopener">🐙 github.com/belisekanziga</a>
+            <a href="https://www.linkedin.com/in/kanziga-belise-500067297/" target="_blank" rel="noopener">🔗 linkedin.com/in/kanziga-belise-500067297</a>
+        </div>
+    </div>
+</section>
+""", unsafe_allow_html=True)
+
+# Main Content
+st.markdown("""
+<main>
+    <!-- About -->
+    <section id="about" class="card">
+        <div class="inner">
+            <h3>About</h3>
+            <p>
+                Data Science Master's student at AIMS Rwanda with a Bachelor's in Mathematics and Statistics.
+                Experienced in data analysis, financial reporting, and mathematical modeling. Proficient in time series analysis,
+                machine learning, and statistical programming. Passionate about using data-driven insights for strategic decisions.
+            </p>
+        </div>
+    </section>
+
+    <!-- Education and Experience -->
+    <section class="grid split">
+        <div id="education" class="card">
+            <div class="inner">
+                <h3>Education</h3>
+                <p><strong>African Institute for Mathematical Sciences (AIMS)</strong> — MSc Data Science, Kigali, Rwanda</p>
+                <p class="muted">Oct 2025 – Present • Advanced studies in ML, statistical modeling, and data engineering.</p>
+                <hr style="border:none; border-top:1px solid var(--border); margin:14px 0">
+                <p><strong>University of Rwanda, College of Science and Technology</strong> — BSc Mathematics & Statistics</p>
+                <p class="muted">Jun 2022 – Oct 2025 • Foundation in statistical analysis and mathematical modeling.</p>
+            </div>
+        </div>
+
+        <div id="experience" class="card">
+            <div class="inner">
+                <h3>Experience</h3>
+                <p><strong>Accountant — Chorale Pastor Bonus</strong> (Feb 2024 – Apr 2025)</p>
+                <ul>
+                    <li>Maintained accurate records of income and expenditures.</li>
+                    <li>Implemented simplified budgeting improving event finance transparency.</li>
+                    <li>Supported fundraising activities, increasing annual funds by 20%.</li>
+                </ul>
+                <p style="margin-top:10px"><strong>Coach — Rwanda Mathematics Olympiad (AIMS)</strong> (Dec 2024 – Present)</p>
+                <ul>
+                    <li>Guided students in advanced problem-solving for national competitions.</li>
+                    <li>Helped students reach top national ranks and expand participation.</li>
+                </ul>
+                <p style="margin-top:10px"><strong>Class Representative — University of Rwanda</strong> (Jun 2022 – Oct 2025)</p>
+                <ul>
+                    <li>Liaised between students and faculty to address academic concerns.</li>
+                    <li>Initiated feedback sessions improving course delivery and scheduling.</li>
+                </ul>
+                <p style="margin-top:10px"><strong>Academic Intern — Rwanda Stock Exchange</strong> (Jul 2024 – Aug 2024)</p>
+                <ul>
+                    <li>Analyzed financial data and stock performance under supervision.</li>
+                    <li>Learned capital market operations and trading technology integration.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="grid split">
+        <div class="card">
+            <div class="inner">
+                <h3>Technical skills</h3>
+                <div>
+                    <span class="pill">Python — Advanced</span>
+                    <span class="pill">R — Advanced</span>
+                    <span class="pill">SPSS — Strong</span>
+                    <span class="pill">Julia — Intermediate</span>
+                    <span class="pill">Linux — Strong</span>
+                    <span class="pill">Statistical modeling — Advanced</span>
+                    <span class="pill">Data visualization — Strong</span>
+                    <span class="pill">Microsoft Office</span>
+                    <span class="pill">Driving License (B)</span>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="inner">
+                <h3>Soft skills</h3>
+                <div>
+                    <span class="pill">Analytical thinking</span>
+                    <span class="pill">Leadership</span>
+                    <span class="pill">Communication</span>
+                    <span class="pill">Adaptability</span>
+                    <span class="pill">Problem-solving</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="card">
+        <div class="inner">
+            <h3>Projects</h3>
+            <p><strong>Three-factor economy modeling with Cobb–Douglas under linear cost constraints</strong></p>
+            <p class="muted">Analyzed economic growth drivers with constrained optimization; interpretable trade-offs across capital, labor, and technology.</p>
+            <hr style="border:none; border-top:1px solid var(--border); margin:12px 0">
+            <p><strong>Working directory generator in Python</strong></p>
+            <p class="muted">Automated standardized student workspaces by parsing CSVs, normalizing names, and generating course-specific directories.</p>
+            <hr style="border:none; border-top:1px solid var(--border); margin:12px 0">
+            <p><strong>Power analysis for hypothesis testing on population mean</strong></p>
+            <p class="muted">Demonstrated how sample size and effect size shape test sensitivity to guide better study design.</p>
+        </div>
+    </section>
+
+    <!-- Achievements and Languages -->
+    <section class="grid split">
+        <div id="achievements" class="card">
+            <div class="inner">
+                <h3>Achievements and training</h3>
+                <ul>
+                    <li>Infographic Competition — National Institute of Statistics of Rwanda (2023, 2024)</li>
+                    <li>EF Standard English Certificate — Proficiency achieved</li>
+                    <li>Mental Health Awareness Training — Completed comprehensive program with Solid Mind</li>
+                </ul>
+            </div>
+        </div>
+        <div id="languages" class="card">
+            <div class="inner">
+                <h3>Languages</h3>
+                <ul>
+                    <li>Kinyarwanda — Native</li>
+                    <li>English — Very good (Professional proficiency)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interests -->
+    <section id="interests" class="card">
+        <div class="inner">
+            <h3>Hobbies and interests</h3>
+            <ul>
+                <li>Volunteering</li>
+                <li>Reading books</li>
+                <li>Playing games</li>
+                <li>Playing musical instruments</li>
+                <li>Driving</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- References -->
+    <section id="references" class="card">
+        <div class="inner">
+            <h3>References</h3>
+            <ul>
+                <li><strong>Dr. Venuste Nyagahakwa</strong> — Lecturer, University of Rwanda • Phone: +250 788548242 • Email: <a href="mailto:venustino2005@gmail.com">venustino2005@gmail.com</a></li>
+                <li><strong>Dr. Emelyne Umunoza Gasana</strong> — DVC Academic and Research Affairs, Kepler College • Phone: +250 788896323 • Email: <a href="mailto:emygasana@gmail.com">emygasana@gmail.com</a></li>
+                <li><strong>Hamza MUGABO</strong> — Supervisor, Rwanda Stock Exchange • Phone: +250 784487417 • Email: <a href="mailto:hamzamugabo73@gmail.com">hamzamugabo73@gmail.com</a></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="card">
+        <div class="inner">
+            <h3>Contact</h3>
+            <p class="muted">Let's collaborate. I'm open to internships, projects, and research opportunities in data science and analytics.</p>
+            <ul>
+                <li><a href="mailto:belisekanziga@gmail.com">Email — belisekanziga@gmail.com</a></li>
+                <li><a href="https://github.com/belisekanziga" target="_blank" rel="noopener">GitHub — github.com/belisekanziga</a></li>
+                <li><a href="https://www.linkedin.com/in/kanziga-belise-500067297/" target="_blank" rel="noopener">LinkedIn — linkedin.com/in/kanziga-belise-500067297</a></li>
+            </ul>
+        </div>
+    </section>
+</main>
+""", unsafe_allow_html=True)
+
+# Footer
+current_year = datetime.now().year
+st.markdown(f"""
+<footer>© {current_year} Kanziga Belise • Kigali, Rwanda</footer>
+""", unsafe_allow_html=True)
